@@ -8,6 +8,7 @@ dependencies = [
     "streamlit",
     "pandas",
     "reportlab",
+    "openpyx1",
 ]
 
 [tool.uv]
