@@ -2,25 +2,46 @@ def calculate_salary(
     basic_salary,
     allowances=0,
     overtime=0,
-    deductions=0
+    bonus=0,
+    advance=0,
+    tax=0,
 ):
-    values = [basic_salary, allowances, overtime, deductions]
+    """Calculate gross salary, deductions, and net salary."""
 
-    if any(value < 0 for value in values):
-        raise ValueError("Salary amounts cannot be negative.")
+    values = {
+        "Basic salary": basic_salary,
+        "Allowances": allowances,
+        "Overtime": overtime,
+        "Bonus": bonus,
+        "Advance deduction": advance,
+        "Tax deduction": tax,
+    }
 
-    gross_salary = basic_salary + allowances + overtime
+    for name, value in values.items():
+        if value < 0:
+            raise ValueError(f"{name} cannot be negative.")
 
-    if deductions > gross_salary:
-        raise ValueError("Deductions cannot exceed gross salary.")
+    gross_salary = (
+        basic_salary + allowances + overtime + bonus
+    )
 
-    net_salary = gross_salary - deductions
+    total_deductions = advance + tax
+
+    if total_deductions > gross_salary:
+        raise ValueError(
+            "Total deductions cannot exceed gross salary."
+        )
+
+    net_salary = gross_salary - total_deductions
 
     return {
-        "basic_salary": round(basic_salary, 2),
-        "allowances": round(allowances, 2),
-        "overtime": round(overtime, 2),
-        "deductions": round(deductions, 2),
-        "gross_salary": round(gross_salary, 2),
-        "net_salary": round(net_salary, 2)
+        "basic_salary": basic_salary,
+        "allowances": allowances,
+        "overtime": overtime,
+        "bonus": bonus,
+        "gross_salary": gross_salary,
+        "advance": advance,
+        "tax": tax,
+        "total_deductions": total_deductions,
+        "net_salary": net_salary,
     }
