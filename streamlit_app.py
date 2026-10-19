@@ -6,7 +6,11 @@ import hmac
 from datetime import date
 from database import initialize_database, get_connection
 from payroll import calculate_salary
-from payslip import generate_payslip
+try:
+    from payslip import generate_payslip
+except ModuleNotFoundError:
+    generate_payslip = None
+
 
 st.set_page_config(
     page_title="Employee Payroll System",
